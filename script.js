@@ -7,7 +7,7 @@ close_popup()
 
 class book {
 
-        constructor(title, author, pageCount, rating, read, image = 'default') {
+        constructor(title ='random book', author='some author', pageCount='over 9000 ', rating, read = 'Read', image = 'default') {
             this.id = currentId;
         console.log(this.id)
         currentId ++;
@@ -145,7 +145,10 @@ add_book.addEventListener('click', open_popup)
 
 function open_popup () {
     const popup = document.getElementById('popup').style.display = 'flex';
+    const backdrop = document.getElementById('backdrop').style.display = 'flex';
+
     console.log('worked')
+
 
 }
 
@@ -154,6 +157,7 @@ close_book.addEventListener('click', close_popup)
 
 function close_popup () {
     const popup = document.getElementById('popup').style.display = 'none';
+    const backdrop = document.getElementById('backdrop').style.display = 'none';
     console.log('worked')
 
 }
