@@ -128,13 +128,7 @@
 .minus-book {
     width:16px;
     height:24px;
-    transform-style: 1;
 }
-
-.minus-book {
-    transform: scale(1.4);
-}
-
 
 
 .minus-book:hover {

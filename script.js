@@ -24,7 +24,7 @@ class book {
 
         this.minusImage = document.createElement('img');
         this.minusImage.classList.add('minus-book');
-        this.minusImage.src='./images/minus.png';
+                this.minusImage.src='./images/minus.png';
 
 
         this.idFunction = () => {
