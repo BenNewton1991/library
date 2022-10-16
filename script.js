@@ -2,6 +2,7 @@ let books = []
 let currentId = 0; 
 let current_selection = -1;
 let container = document.getElementById('container');
+let toDelete = -1;
 
 close_popup()
 
@@ -20,8 +21,15 @@ class book {
         this.image.classList.add('book-image') ;
         this.image.src='./images/'+image+'.png';   
 
+
+        this.minusImage = document.createElement('img');
+        this.minusImage.classList.add('minus-book');
+        this.minusImage.src='./images/minus.png';
+
+
         this.idFunction = () => {
             current_selection = this.id;
+            console.log(current_selection + ' has been removed')
         }
         this.isRead = () => {
             if (this.read == 'Read'){
@@ -34,6 +42,8 @@ class book {
                 add_books(books)
             }
         }
+
+        
         
 
         }        
@@ -99,6 +109,15 @@ function createBook (book) {
      divChildBottomRight = document.createElement('div');
      divChildBottomRight.classList.add('book-right-bot');
 
+    
+     book.minusImage.addEventListener('click', book.idFunction);
+     book.minusImage.addEventListener('click', removeBook);
+
+
+     divChildBottomRight.appendChild(book.minusImage);
+
+
+
      bookDiv.appendChild(divChildBottomRight)
 
      return bookDiv
@@ -124,17 +143,36 @@ function add_books (books) {
     let bookList = []
 
 
-    for (let i = 0; i < books.length; i++){
+    if (books != undefined) {
+        for (let i = 0; i < books.length; i++){
 
-        const container = document.getElementById('container');
-        console.log('added: '+books[i].title)
-        console.log(books[i])
+            const container = document.getElementById('container');
+            console.log('added: '+books[i].title)
+            console.log(books[i])
+    
+            bookList[i] = createBook(books[i])
+          
+            container.appendChild(bookList[i]);
+        }
 
-        bookList[i] = createBook(books[i])
-      
-        container.appendChild(bookList[i]);
     }
+    
 }
+
+
+function removeBook () {
+    console.log(books)
+
+    books = books.filter(book => book.id != current_selection)
+    console.log(books)
+
+    add_books(books)
+
+
+
+}
+
+
 
 
 
@@ -146,6 +184,9 @@ add_book.addEventListener('click', open_popup)
 function open_popup () {
     const popup = document.getElementById('popup').style.display = 'flex';
     const backdrop = document.getElementById('backdrop').style.display = 'flex';
+    for (let i = 0; i < books.length; i ++) {
+        books[i].minusImage.classList.add('lower-z')
+    }
 
     console.log('worked')
 
@@ -158,11 +199,18 @@ close_book.addEventListener('click', close_popup)
 function close_popup () {
     const popup = document.getElementById('popup').style.display = 'none';
     const backdrop = document.getElementById('backdrop').style.display = 'none';
+
+
+    
+
+
     console.log('worked')
 
 }
 
 close_book.addEventListener('click', addBook)
+
+/* Function for adding new books */
 
 function addBook(){
     const title =  document.getElementById('title').value;
@@ -172,14 +220,20 @@ function addBook(){
     document.getElementById('read').checked ? read = 'Read' : read = 'Not Read';
     const image = document.getElementById('image').value;
 
-
-
     const newBook = new book(title, author, pages, '5 stars', read, image);
     books.push(newBook);
     add_books(books)
+    clearform()
+}
+
+/* Function for clearing form */
 
 
-
-
+function clearform () {
+    document.getElementById('title').value = '';
+    document.getElementById('author').value = '';
+    document.getElementById('pages').value = '';
+    document.getElementById('read').checked = false;
+    document.getElementById('image').value = 'default';
 
 }
